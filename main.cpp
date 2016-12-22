@@ -1,22 +1,26 @@
 #include "stdafx.h"
-#include <windows.h>
-#include "png.h"
+#include <iostream>
+#include <fstream>
+
+#define WIDTH	28
+#define HEIGHT	28
 int main()
 {
-	PNG imgin;
-	imgin.readFromFile("0_test_ver1.png");
-
-	/*Test correctness of contents in PNG*/
-	size_t width = imgin.width();
-	size_t height = imgin.height();
-	std::cout << width << " " << height << "\n";
-	RGBAPixel *curr_pix = imgin(0, 0);
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
-			RGBAPixel *curr_pix = imgin(j, i);
-			std::cout << curr_pix->red << " " << curr_pix->green << " " << curr_pix->blue << "\n";
+	std::fstream input_file("trainingimages.txt");
+	char img[784];
+	while (!input_file.eof()) {
+		input_file.get(img, WIDTH*HEIGHT);
+		for (int i = 0; i < WIDTH; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				std::cout << img[i * WIDTH + j];
+			}
+			std::cout << "\n";
 		}
+
 	}
-    return 0;
+	input_file.close();
+	return 0;
 }
+
+
 
